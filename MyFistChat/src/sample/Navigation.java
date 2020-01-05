@@ -22,7 +22,7 @@ public class Navigation {
 
     public Navigation(Stage stage) {
         this.stage = stage;
-        scene = new Scene(new Pane(),600,400);
+        scene = new Scene(new Pane(), 600, 400);
         stage.setScene(scene);
     }
 
@@ -36,18 +36,18 @@ public class Navigation {
 
             return controller;
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void show(Controller controller){
-            scene.setRoot((Parent) controller.getView());
-            controllers.add(controller);
+    public void show(Controller controller) {
+        scene.setRoot((Parent) controller.getView());
+        controllers.add(controller);
     }
 
-    public void goBack(){
+    public void goBack() {
         if (controllers.size() > 1) {
             controllers.remove(controllers.get(controllers.size() - 1));
             scene.setRoot((Parent) controllers.get(controllers.size() - 1).getView());

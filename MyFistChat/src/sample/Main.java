@@ -18,6 +18,7 @@ public class Main extends Application {
         navigation = new Navigation(primaryStage);
 
         primaryStage.setTitle("chat");
+        primaryStage.setResizable(false);
         primaryStage.show();
         Main.getNavigation().load(SignInController.URL_FXML).show();
     }

@@ -25,13 +25,11 @@ public class BaseController implements Controller {
         postShowing();
     }
 
-    public void preShowing()
-    {
+    public void preShowing() {
 
     }
 
-    public void postShowing()
-    {
+    public void postShowing(){
 
     }
 }

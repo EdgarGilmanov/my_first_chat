@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_18.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/animations/ShakeAnim.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dataBase/Const.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dataBase/DataBaseHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TESTTET.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TESTTET.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TESTTET/controllers/SignInController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TESTTET/controllers/SignInController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TESTTET/controllers/SignUpController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TESTTET/controllers/SignUpController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TESTTET/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TESTTET/sample/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TESTTET/view/signIn.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TESTTET/view/signIn.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TESTTET/view/signUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TESTTET/view/signUp.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/BaseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/SignInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/SignInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/SignUpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Navigation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Navigation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/signIn.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/signIn.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/signUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/signUp.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,8 +85,14 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="1VtABNGAHb6EJCdsfnQrszrxXYK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
@@ -83,6 +111,8 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="OverrideImplement.combined" value="false" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -130,7 +160,7 @@
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="sample.Main" />
       <module name="TESTTET" />
-      <option name="VM_PARAMETERS" value="--module-path $USER_HOME$/Documents/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../../../javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value=".*" />
@@ -219,6 +249,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1578132139031" />
+    <state x="898" y="173" key="#com.intellij.ide.util.MemberChooser" timestamp="1578146429467">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="898" y="173" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1578146429467" />
     <state x="457" y="241" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1578132137511">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -227,25 +261,41 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1578131691397" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1578134405312">
+    <state x="482" y="172" key="DetectedRootsChooserDialog" timestamp="1578149382837">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1578134405312" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1578134405309">
+    <state x="482" y="172" key="DetectedRootsChooserDialog/0.0.1440.900@0.0.1440.900" timestamp="1578149382837" />
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1578207681958">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1578134405309" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1578134405307">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1578207681958" />
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1578198118976" />
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.23.1440.825@0.23.1440.825" timestamp="1578139103520" />
+    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1578207681954">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1578134405307" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1578134405311">
+    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1578207681954" />
+    <state width="1398" height="245" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1578198118972" />
+    <state width="1398" height="245" key="GridCell.Tab.0.center/0.23.1440.825@0.23.1440.825" timestamp="1578139103518" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1578207681952">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1578134405311" />
-    <state x="208" y="31" key="SettingsEditor" timestamp="1578061912675">
+    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1578207681952" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1578198118970" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left/0.23.1440.825@0.23.1440.825" timestamp="1578139103517" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1578207681956">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="208" y="31" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1578061912675" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1578207681956" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1578198118974" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right/0.23.1440.825@0.23.1440.825" timestamp="1578139103519" />
+    <state x="208" y="31" key="SettingsEditor" timestamp="1578149399824">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="208" y="31" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1578149399824" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1578205767260">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1578205767260" />
   </component>
 </project>
