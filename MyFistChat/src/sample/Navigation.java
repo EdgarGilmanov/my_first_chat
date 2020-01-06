@@ -17,6 +17,8 @@ public class Navigation {
     private final Stage stage;
     private final Scene scene;
 
+
+
     private List<Controller> controllers = new ArrayList<>();
 
 
@@ -24,6 +26,10 @@ public class Navigation {
         this.stage = stage;
         scene = new Scene(new Pane(), 600, 400);
         stage.setScene(scene);
+    }
+
+    public Scene getScene() {
+        return scene;
     }
 
     public Controller load(String sUrl) {

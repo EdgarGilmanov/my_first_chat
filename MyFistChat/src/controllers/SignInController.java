@@ -1,6 +1,7 @@
 package controllers;
 
 import animations.ShakeAnim;
+import client.Client;
 import dataBase.DataBaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class SignInController extends BaseController implements Initializable {
 
-    public static final String URL_FXML = "/view/signIn.fxml";
+    public static final String URL_FXML = "/gui/view/signIn.fxml";
 
     @FXML
     private ResourceBundle resources;
@@ -57,8 +58,8 @@ public class SignInController extends BaseController implements Initializable {
                 if(trySignIn(dbHandler,user)){
                     errorTextPassword.setOpacity(0);
                     errorTextUserName.setOpacity(0);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.showAndWait();
+                    Client.setUser(user);
+                    Main.getNavigation().load(ChatController.URL_FXML).show();
                 };
             }
         });

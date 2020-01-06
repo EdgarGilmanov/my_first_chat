@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class SignUpController extends BaseController implements Initializable {
 
-    public static final String URL_FXML = "/view/signUp.fxml";
+    public static final String URL_FXML = "/gui/view/signUp.fxml";
 
     @FXML
     private TextField userNameField;
