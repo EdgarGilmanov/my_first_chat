@@ -1,21 +1,16 @@
 package controllers;
 
-import java.io.IOException;
-import java.net.Socket;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import client.Client;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import client.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import sample.Main;
 
 
@@ -43,9 +38,11 @@ public class ChatController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Client client = new Client();
+        Model model = new Model();
+        Client client = new Client(model);
         client.setDaemon(true);
-        client.start();
+        textChatArea.textProperty().bind(model.newMessageProperty());
+        usersListArea.textProperty().bind(model.usersProperty());
         signOutButton.setOnAction(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText("Вы уверены, что хотите покинуть чат?");
@@ -53,15 +50,10 @@ public class ChatController extends BaseController implements Initializable {
             alert.showAndWait();
             if (alert.getResult().getText().equals("OK")) Main.getNavigation().goBack();
         });
-
+        messageTextField.setOnAction(event -> {
+            client.sendTextMessage(messageTextField.getText());
+            messageTextField.setText("");
+        });
+        client.start();
     }
-
-    public TextArea getTextChatArea() {
-        return textChatArea;
-    }
-
-    public TextArea getUsersListArea() {
-        return usersListArea;
-    }
-
 }

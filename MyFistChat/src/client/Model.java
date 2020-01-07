@@ -1,24 +1,39 @@
 package client;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Model {
     private final Set<String> allUserNames = new HashSet<>();
-    private StringBuffer newMessage = new StringBuffer();
+    private SimpleStringProperty newMessage = new SimpleStringProperty("");
+    private SimpleStringProperty users = new SimpleStringProperty("");
 
-    public Set<String> getAllUserNames() {
-        return Collections.unmodifiableSet(allUserNames);
+    public void setAllUserNames() {
+        StringBuilder sb = new StringBuilder();
+        for (String userName : Collections.unmodifiableSet(allUserNames)) {
+            sb.append(userName).append("\n");
+        }
+        users.set(sb.toString());
     }
 
-    public String getNewMessage() {
-        return newMessage.toString();
+    public void setNewMessage(String message) {
+        this.newMessage.set(newMessage.get()+message +"\n");
+        System.out.println(newMessage.toString());
     }
 
-    public void setNewMessage(String newMessage) {
-        this.newMessage.append(newMessage).append("\n");
+
+    public SimpleStringProperty newMessageProperty() {
+        return newMessage;
     }
+
+
+    public SimpleStringProperty usersProperty() {
+        return users;
+    }
+
     public void addUser(String newUserName){
         allUserNames.add(newUserName);
     }

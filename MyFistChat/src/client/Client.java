@@ -1,6 +1,6 @@
 package client;
 
-import controllers.ChatController;
+
 import sample.User;
 import server.Connection;
 import server.ConsoleHelper;
@@ -11,36 +11,32 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Client extends Thread {
-    private static User user;
-    private Connection connection;
+    private Model model;
+
+    public Client(Model model) {
+        this.model = model;
+    }
+
+    protected Connection connection;
     private volatile boolean clientConnected = true;
-    private Model model = new Model();
-    private ChatController chatController = new ChatController();
+    private static User user;
 
-
-
-    public static void setUser(User parUser) {
-        System.out.println("setuser");
-        user = parUser;
+    public static void setUser(User user1){
+        user = user1;
+    }
+    public boolean shouldSendTextFromConsole() {
+        return true;
     }
 
-    public Model getModel() {
-        System.out.println("getModel");
-        return model;
-    }
-
-
-    protected SocketThread getSocketThread() {
-        System.out.println("getSocketThread");
+    public SocketThread getSocketThread() {
         return new SocketThread();
     }
 
-    protected void sendTextMessage(String text) {
-        //System.out.println("sendTextMessage");
+    public void sendTextMessage(String text) {
         try {
             connection.send(new Message(MessageType.TEXT, text));
         } catch (IOException e) {
-            ConsoleHelper.writeMessage("Ошибка отправки сообщений");
+            ConsoleHelper.writeMessage("Ошибка");
             clientConnected = false;
         }
     }
@@ -50,84 +46,70 @@ public class Client extends Thread {
         thread.setDaemon(true);
         thread.start();
         synchronized (this) {
-            System.out.println("run synch(this)");
             try {
-                this.wait();
+                wait();
             } catch (InterruptedException e) {
                 ConsoleHelper.writeMessage(e.getMessage());
             }
         }
         if (clientConnected) {
-            ConsoleHelper.writeMessage("Соединение установлено.\nДля выхода наберите команду '//exit'.");
+            ConsoleHelper.writeMessage("Соединение установлено.\nДля выхода наберите команду 'exit'.");
         } else {
             ConsoleHelper.writeMessage("Произошла ошибка во время работы клиента.");
         }
         while (clientConnected) {
-            //System.out.println("ждет сообщения");
-            String result = null;
-            if (result.equals("//exit")) break;
-            sendTextMessage(result);
+            String result = ConsoleHelper.readString();
+            if (result.equals("exit")) break;
+            if (shouldSendTextFromConsole()) {
+                sendTextMessage(result);
+            }
         }
+
+
     }
 
     public class SocketThread extends Thread {
-        protected void processIncomingMessage(String message) throws IOException, ClassNotFoundException {
-            //System.out.println("processIncomingMessage");
-            getModel().setNewMessage(message);
-            chatController.getTextChatArea().setText(getModel().getNewMessage());
+        public void processIncomingMessage(String message) throws IOException, ClassNotFoundException {
+            model.setNewMessage(message);
         }
 
-        protected void informAboutAddingNewUser(String userName) {
-            System.out.println("informAboutAddingNewUser");
-            getModel().setNewMessage(userName + " подлючился к чату");
-            chatController.getTextChatArea().setText(getModel().getNewMessage());
-            getModel().addUser(userName);
-            StringBuilder sb = new StringBuilder();
-            for (String name : getModel().getAllUserNames()) {
-                sb.append(name).append("\n");
-            }
-            chatController.getUsersListArea().setText(sb.toString());
+        public void informAboutAddingNewUser(String userName) {
+            model.setNewMessage(userName + " подлючился к чату");
+            model.addUser(userName);
+            model.setAllUserNames();
         }
 
-        protected void informAboutDeletingNewUser(String userName) {
-            System.out.println("informAboutDeletingNewUser");
-            getModel().setNewMessage(userName + " покинул чат");
-            chatController.getTextChatArea().setText(getModel().getNewMessage());
-            getModel().deleteUser(userName);
-            StringBuilder sb = new StringBuilder();
-            for (String name : getModel().getAllUserNames()) {
-                sb.append(name).append("\n");
-            }
-            chatController.getUsersListArea().setText(sb.toString());
+        public void informAboutDeletingNewUser(String userName) {
+            model.setNewMessage(userName + "покинул чат");
+            model.deleteUser(userName);
+            model.setAllUserNames();
         }
 
-        protected void notifyConnectionStatusChanged(boolean clientConnected) {
-            System.out.println("notifyConnectionStatusChanged");
+        public void notifyConnectionStatusChanged(boolean clientConnected) {
             Client.this.clientConnected = clientConnected;
             synchronized (Client.this) {
-                System.out.println("synchronized (Client.this)");
                 Client.this.notify();
             }
         }
 
-        protected void clientHandshake() throws IOException, ClassNotFoundException {
-            System.out.println("clientHandshake()");
+        public void clientHandshake() throws IOException, ClassNotFoundException {
+            System.out.println("здороваемся с пользователем");
             while (true) {
                 Message message = connection.receive();
-                System.out.println("ждем сообщения");
+                System.out.println("Ждем сообщения");
                 if (message.getType() == MessageType.NAME_REQUEST) {
-                    System.out.println("приняли запрос на имя");
+                    System.out.println("приняли запрос и отправили имя");
                     connection.send(new Message(MessageType.USER_NAME, user.getUserName()));
-                    System.out.println("отправили имя");
                 } else if (message.getType() == MessageType.NAME_ACCEPTED) {
+                    System.out.println("приняли сообщение о том что пользователь красавчик");
                     notifyConnectionStatusChanged(true);
                     break;
                 } else throw new IOException("Unexpected MessageType");
             }
         }
 
-        protected void clientMainLoop() throws IOException, ClassNotFoundException {
-            System.out.println("clientMainLoop()");
+        public void clientMainLoop() throws IOException, ClassNotFoundException {
+            System.out.println("общаемся с клиентом");
             while (true) {
                 Message message = connection.receive();
                 if (message.getType() == MessageType.TEXT) {
@@ -143,9 +125,8 @@ public class Client extends Thread {
         }
 
         public void run() {
-            Socket socket = null;
             try {
-                socket = new Socket("localhost", 8000);
+                Socket socket = new Socket("localhost", 8000);
                 connection = new Connection(socket);
                 clientHandshake();
                 clientMainLoop();
