@@ -21,7 +21,7 @@ public class Model {
 
     public void setNewMessage(String message) {
         String messageResult = message;
-        if(messageResult.length()>55){
+        if(messageResult.length()>50){
             messageResult = messageTransfer(messageResult);
         }
         this.newMessage.set(newMessage.get()+messageResult +"\n");

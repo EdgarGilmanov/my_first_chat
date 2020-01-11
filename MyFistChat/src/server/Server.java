@@ -1,17 +1,21 @@
 package server;
 
+import server.dataBase.DataBaseHandler;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Server {
-    private static Map<String, Connection> connectionMap = new ConcurrentHashMap<>();
-
+    private static DataBaseHandler dbHandler = new DataBaseHandler();
+    private static Map<User, Connection> connectionMap = new ConcurrentHashMap<>();
 
     public static void sendBroadcastMessage(Message message) {
-        for (String key : connectionMap.keySet()) {
+        for (User key : connectionMap.keySet()) {
             try {
                 connectionMap.get(key).send(message);
             } catch (IOException e) {
@@ -27,28 +31,54 @@ public class Server {
             this.socket = socket;
         }
 
-        private String serverHandshake(Connection connection) throws IOException, ClassNotFoundException {
-            String name = null;
-            while (true) {
-                connection.send(new Message(MessageType.NAME_REQUEST));
+        private User serverHandshake(Connection connection) throws IOException, ClassNotFoundException {
+            User user = null;
+            while (true){
+                connection.send(new Message(MessageType.USER_REQUEST_DB));
                 Message messageClient = connection.receive();
-                if (messageClient.getType() == MessageType.USER_NAME
-                        && !messageClient.getData().isEmpty()
-                        && !connectionMap.containsKey(messageClient.getData())) {
-                    name = messageClient.getData();
-                    connectionMap.put(name, connection);
-                    connection.send(new Message(MessageType.NAME_ACCEPTED));
-                    break;
+                if(messageClient.getType() == MessageType.USER && messageClient.getUser()!=null){
+                    if(searchUserInDB(Server.dbHandler,messageClient.getUser())) {
+                        user = messageClient.getUser();
+                        connectionMap.put(user,connection);
+                        connection.send(new Message(MessageType.USER_ACCEPTED));
+                        break;
+                    }else {
+                        connection.send(new Message(MessageType.USER_NOT_ACCEPTED));
+                    }
+                }else if(messageClient.getType() == MessageType.USER_REGISTRATION){
+                    System.out.println("Сервер принял запрос на регистрацию");
+                    connection.send(new Message(MessageType.REGISTRATION_ALLOWED));
+                } else if(messageClient.getType() == MessageType.REG_USER && messageClient.getUser()!= null){
+                    System.out.println("Сервер принял пользователя на обработку");
+                    if(!searchUserInDB(Server.dbHandler,messageClient.getUser())){
+                        dbHandler.signUpUser(messageClient.getUser());
+                        connection.send(new Message(MessageType.REGISTRATION_ACCEPTED));
+                        System.out.println("Регистрация прошла успешно");
+                    }else{
+                        connection.send(new Message(MessageType.REGISTRATION_NOT_ACCEPTED));
+                        System.out.println("Регистрация не прошла");
+                    }
                 }
             }
-            return name;
+            return user;
+        }
+
+        private boolean searchUserInDB(DataBaseHandler dbHandler, User user){
+            ResultSet resultSet = dbHandler.getUser(user);
+            int count = 0;
+            try {
+                while (resultSet.next()) count++;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return !(count == 0);
         }
 
         private void notifyUsers(Connection connection, String userName) {
             connectionMap.forEach((k, v) -> {
-                if (!k.equals(userName)) {
+                if (!k.getUserName().equals(userName)) {
                     try {
-                        connection.send(new Message(MessageType.USER_ADDED, k));
+                        connection.send(new Message(MessageType.USER_ADDED, k.getUserName()));
                     } catch (IOException ignored) {
                     }
                 }
@@ -72,15 +102,15 @@ public class Server {
         public void run() {
             ConsoleHelper.writeMessage("Установлено соединение " + socket.getRemoteSocketAddress().toString());
             Connection connection = null;
-            String userName = null;
+            User user = null;
             try {
                 connection = new Connection(socket);
-                userName = serverHandshake(connection);
-                notifyUsers(connection, userName);
-                sendBroadcastMessage(new Message(MessageType.USER_ADDED, userName));
-                serverMainLoop(connection, userName);
-                connectionMap.remove(userName);
-                sendBroadcastMessage(new Message(MessageType.USER_REMOVED,userName));
+                user = serverHandshake(connection);
+                notifyUsers(connection, user.getUserName());
+                sendBroadcastMessage(new Message(MessageType.USER_ADDED, user.getUserName()));
+                serverMainLoop(connection, user.getUserName());
+                connectionMap.remove(user);
+                sendBroadcastMessage(new Message(MessageType.USER_REMOVED, user.getUserName()));
                 socket.close();
                 ConsoleHelper.writeMessage("Соединение с сервером закрыто");
             } catch (IOException | ClassNotFoundException e) {

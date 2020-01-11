@@ -1,18 +1,20 @@
 package client.controllers;
 
+import client.ClientSignUp;
+import client.Launcher;
 import client.view.animations.ShakeAnim;
-import dataBase.DataBaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import sample.Main;
-import sample.User;
+import server.User;
 
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class SignUpController extends BaseController implements Initializable {
 
@@ -61,15 +63,18 @@ public class SignUpController extends BaseController implements Initializable {
         maleButton.setSelected(true);
         femaleButton.setToggleGroup(group);
         backButton.setOnAction(event -> {
-            Main.getNavigation().goBack();
+            Launcher.getNavigation().goBack();
         });
         signUpDoneButton.setOnAction(event -> {
-            signUp();
+            try {
+                signUp();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
         });
     }
 
-    private void signUp() {
-        DataBaseHandler dbHandler = new DataBaseHandler();
+    private void signUp() throws ExecutionException, InterruptedException {
         User user = null;
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
@@ -78,35 +83,30 @@ public class SignUpController extends BaseController implements Initializable {
         String gender = "male";
         if (femaleButton.isSelected()) gender = "female";
 
-        if(isCorrectInput(firstName,lastName,userName,password)) {
+        if (isCorrectInput(firstName, lastName, userName, password)) {
             user = new User(firstName, lastName, userName, password, gender);
-            if(tryRegistration(dbHandler,user)) {
-                dbHandler.signUpUser(user);
+            ClientSignUp clientSignUp = new ClientSignUp(user);
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            Future<Integer> future = executorService.submit(clientSignUp);
+            executorService.shutdown();
+            if(future.get() == 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Ошибка регистрации");
+                alert.setHeaderText("Пользователь с таким логином уже найден");
+                alert.showAndWait();
+            }else if(future.get() == 1 ) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Завершение регистрации");
                 alert.setHeaderText("Регистрация заверешена. В окне авторизации войдите в свою учетную запись");
                 alert.showAndWait();
-                Main.getNavigation().goBack();
+                Launcher.getNavigation().goBack();
+            } else if(future.get() == 2) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Ошибка соединения с сервером");
+                alert.setHeaderText("Отсутствует содинение с сервером. Повторите попытку позже");
+                alert.showAndWait();
             }
         }
-    }
-
-    private boolean tryRegistration(DataBaseHandler dbHandler,User user) {
-        ResultSet resultSet = dbHandler.getUserForSignUp(user);
-        int count = 0;
-        try {
-            while (resultSet.next()) count++;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (count > 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ошибка при регистрации");
-            alert.setHeaderText("Имя пользователя уже зарегистрировано");
-            alert.showAndWait();
-        } else return true;
-
-        return false;
     }
 
     private boolean isCorrectInput(String firstName, String lastName, String userName, String password){

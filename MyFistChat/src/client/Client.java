@@ -1,11 +1,9 @@
 package client;
 
-
-import sample.User;
 import server.Connection;
-import server.ConsoleHelper;
 import server.Message;
 import server.MessageType;
+import server.User;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -15,6 +13,16 @@ public class Client extends Thread {
     private Connection connection;
     private volatile boolean clientConnected = true;
     private User user;
+    private boolean serverConnect = false;
+    private boolean userNotFound = false;
+
+    public boolean isServerConnect() {
+        return serverConnect;
+    }
+
+    public boolean isUserNotFound() {
+        return userNotFound;
+    }
 
     public boolean isClientConnected() {
         return clientConnected;
@@ -32,7 +40,7 @@ public class Client extends Thread {
         user = us;
     }
 
-    public SocketThread getSocketThread() {
+    private SocketThread getSocketThread() {
         return new SocketThread();
     }
 
@@ -40,7 +48,7 @@ public class Client extends Thread {
         try {
             connection.send(new Message(MessageType.TEXT, text));
         } catch (IOException e) {
-            ConsoleHelper.writeMessage("Ошибка соединения с сервером");
+            System.out.println("Ошибка соединения с сервером");
             clientConnected = false;
         }
     }
@@ -52,61 +60,64 @@ public class Client extends Thread {
     }
 
     public void run() {
-        System.out.println("Поток client начал свою работу ");
         SocketThread thread = getSocketThread();
+        thread.setDaemon(true);
         thread.start();
         synchronized (this) {
             try {
                 wait();
             } catch (InterruptedException e) {
-                ConsoleHelper.writeMessage(e.getMessage());
+                e.printStackTrace();
             }
         }
         if (clientConnected) {
-            ConsoleHelper.writeMessage("Соединение с клиентом установлено");
+            System.out.println("Соединение с клиентом установлено");
         } else {
-            ConsoleHelper.writeMessage("Произошла ошибка во время соединения с клиентом.");
+            System.out.println("Произошла ошибка во время соединения с клиентом.");
         }
         while (clientConnected) {}
     }
 
-    public class SocketThread extends Thread {
-        public void processIncomingMessage(String message) throws IOException, ClassNotFoundException {
+    private class SocketThread extends Thread {
+        private void processIncomingMessage(String message) {
             model.setNewMessage(message);
         }
 
-        public void informAboutAddingNewUser(String userName) {
+        private void informAboutAddingNewUser(String userName) {
             model.setNewMessage(userName + " подлючился(-ась) к чату");
             model.addUser(userName);
             model.setAllUserNames();
         }
 
-        public void informAboutDeletingNewUser(String userName) {
+        private void informAboutDeletingNewUser(String userName) {
             model.setNewMessage(userName + " покинул(-а) чат");
             model.deleteUser(userName);
             model.setAllUserNames();
         }
 
-        public void notifyConnectionStatusChanged(boolean clientConnected) {
+        private void notifyConnectionStatusChanged(boolean clientConnected) {
             Client.this.clientConnected = clientConnected;
             synchronized (Client.this) {
                 Client.this.notify();
             }
         }
 
-        public void clientHandshake() throws IOException, ClassNotFoundException {
-            while (true) {
+        private void clientHandshake() throws IOException, ClassNotFoundException {
+            while (true){
                 Message message = connection.receive();
-                if (message.getType() == MessageType.NAME_REQUEST) {
-                    connection.send(new Message(MessageType.USER_NAME, user.getUserName()));
-                } else if (message.getType() == MessageType.NAME_ACCEPTED) {
+                if(message.getType() == MessageType.USER_REQUEST_DB){
+                    connection.send(new Message(MessageType.USER,user));
+                } else if(message.getType() == MessageType.USER_ACCEPTED){
                     notifyConnectionStatusChanged(true);
                     break;
-                } else throw new IOException("Unsupported message");
+                } else if(message.getType() == MessageType.USER_NOT_ACCEPTED){
+                    userNotFound = true;
+                    closeConnection();
+                }
             }
         }
 
-        public void clientMainLoop() throws IOException, ClassNotFoundException {
+        private void clientMainLoop() throws IOException, ClassNotFoundException {
             while (true) {
                 Message message = connection.receive();
                 if (message.getType() == MessageType.TEXT) {
@@ -121,10 +132,10 @@ public class Client extends Thread {
 
         public void run() {
             try {
-                Socket socket = new Socket("192.168.43.82", 8000);
+                Socket socket = new Socket("localhost", 8000);
                 connection = new Connection(socket);
+                serverConnect = true;
                 clientHandshake();
-                System.out.println("перешел на маинлуп");
                 clientMainLoop();
             } catch (IOException | ClassNotFoundException e) {
                 notifyConnectionStatusChanged(false);

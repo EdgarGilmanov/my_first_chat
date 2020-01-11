@@ -1,7 +1,7 @@
 package client.controllers;
 
 import javafx.scene.Node;
-import sample.Main;
+import client.Launcher;
 
 
 public class BaseController implements Controller {
@@ -21,7 +21,7 @@ public class BaseController implements Controller {
     @Override
     public void show() {
         preShowing();
-        Main.getNavigation().show(this);
+        Launcher.getNavigation().show(this);
         postShowing();
     }
 
