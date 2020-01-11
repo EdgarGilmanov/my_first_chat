@@ -51,10 +51,6 @@ public class Client extends Thread {
          connection.close();
     }
 
-    public void close(){
-        clientConnected = false;
-    }
-
     public void run() {
         System.out.println("Поток client начал свою работу ");
         SocketThread thread = getSocketThread();
@@ -72,7 +68,6 @@ public class Client extends Thread {
             ConsoleHelper.writeMessage("Произошла ошибка во время соединения с клиентом.");
         }
         while (clientConnected) {}
-        System.out.println("Поток client завершил свою работу");
     }
 
     public class SocketThread extends Thread {

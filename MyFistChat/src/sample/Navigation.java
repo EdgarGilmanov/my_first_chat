@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import controllers.Controller;
+import client.controllers.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class Navigation {
         return null;
     }
 
-    public void show(Controller controller) {
+    public void show(client.controllers.BaseController controller) {
         scene.setRoot((Parent) controller.getView());
         controllers.add(controller);
     }

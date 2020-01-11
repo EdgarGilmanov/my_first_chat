@@ -1,4 +1,4 @@
-package controllers;
+package client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,7 +15,7 @@ import sample.Main;
 
 
 public class ChatController extends BaseController implements Initializable {
-    public static final String URL_FXML = "/gui/view/chatWindow.fxml";
+    public static final String URL_FXML = "/client/view/chatWindow.fxml";
     private Client client;
     private Model model;
 

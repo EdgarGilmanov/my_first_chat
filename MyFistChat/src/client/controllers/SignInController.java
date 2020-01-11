@@ -1,15 +1,19 @@
-package controllers;
+package client.controllers;
 
-import animations.ShakeAnim;
 import client.Client;
 import client.Model;
+import client.view.animations.*;
 import dataBase.DataBaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import sample.Main;
 import sample.User;
+
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +22,7 @@ import java.util.ResourceBundle;
 public class SignInController extends BaseController implements Initializable {
     private static Client client;
     private Model model;
-    public static final String URL_FXML = "/gui/view/signIn.fxml";
+    public static final String URL_FXML = "/client/view/signIn.fxml";
 
     @FXML
     private TextField userNameField;
@@ -70,7 +74,6 @@ public class SignInController extends BaseController implements Initializable {
                         alert.setTitle("Ошибка соединения с сервером");
                         alert.setHeaderText("Нет подлкючения к серверу. Повторите попытку позже");
                         alert.showAndWait();
-                        client.close();
                         client = null;
                         model = null;
                     }

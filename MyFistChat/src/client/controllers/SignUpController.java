@@ -1,6 +1,6 @@
-package controllers;
+package client.controllers;
 
-import animations.ShakeAnim;
+import client.view.animations.ShakeAnim;
 import dataBase.DataBaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class SignUpController extends BaseController implements Initializable {
 
-    public static final String URL_FXML = "/gui/view/signUp.fxml";
+    public static final String URL_FXML = "/client/view/signUp.fxml";
 
     @FXML
     private TextField userNameField;

@@ -1,4 +1,4 @@
-package animations;
+package client.view.animations;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;

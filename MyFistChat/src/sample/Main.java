@@ -1,8 +1,6 @@
 package sample;
 
-import client.Client;
-import client.Model;
-import controllers.SignInController;
+import client.controllers.SignInController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

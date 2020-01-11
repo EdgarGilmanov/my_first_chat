@@ -45,17 +45,18 @@ public class Model {
     }
 
 
+    //здесь пытаемся разделить длинное сообщение
     private String messageTransfer(String message){
-        int count = message.length()/55;
+        int count = message.length()/50;
         StringBuilder stringBuilder = new StringBuilder(message);
-        int cont2 = 55;
+        int count2 = 50;
         while (count>0){
-            if(stringBuilder.charAt(cont2) == ' '){
-                stringBuilder.insert(cont2+1,"\n");
-                cont2 = cont2 + 55;
+            if(stringBuilder.charAt(count2) == ' '){
+                stringBuilder.insert(count2+1,"\n");
+                count2 = count2 + 50;
                 count--;
             } else {
-                cont2--;
+                count2--;
             }
         }
         return stringBuilder.toString();
