@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Server {
     private static Map<String, Connection> connectionMap = new ConcurrentHashMap<>();
 
+
     public static void sendBroadcastMessage(Message message) {
         for (String key : connectionMap.keySet()) {
             try {
@@ -60,8 +61,11 @@ public class Server {
                 if (messageClient.getType() == MessageType.TEXT) {
                     Message messageServer = new Message(MessageType.TEXT, userName + ": " + messageClient.getData());
                     sendBroadcastMessage(messageServer);
+                }else if(messageClient.getType() == MessageType.CLOSE_CONNECTION){
+                    break;
                 } else {
                     ConsoleHelper.writeMessage("Ошибка получения сообщения от пользователя");
+                    break;
                 }
             }
         }

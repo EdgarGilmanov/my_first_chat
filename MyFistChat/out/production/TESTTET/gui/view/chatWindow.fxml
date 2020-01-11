@@ -11,9 +11,18 @@
     <children>
         <AnchorPane layoutY="89.0" prefHeight="313.0" prefWidth="600.0" style="-fx-background-color: fafafa;">
             <children>
-            <TextField fx:id="messageTextField" layoutX="10.0" layoutY="272.0" prefHeight="27.0" prefWidth="578.0" promptText="Введите свое сообщение..." />
-            <TextArea fx:id="textChatArea" editable="false" layoutX="10.0" layoutY="9.0" prefHeight="258.0" prefWidth="434.0" />
-            <TextArea fx:id="usersListArea" editable="false" layoutX="447.0" layoutY="9.0" prefHeight="258.0" prefWidth="141.0" />
+            <TextField fx:id="messageTextField" layoutX="10.0" layoutY="272.0" prefHeight="27.0" prefWidth="578.0" promptText="Введите свое сообщение...">
+               <font>
+                  <Font name="Apple Braille" size="15.0" />
+               </font></TextField>
+            <TextArea fx:id="textChatArea" cache="true" layoutX="10.0" layoutY="9.0" pickOnBounds="false" prefHeight="258.0" prefWidth="434.0">
+               <font>
+                  <Font name="Apple Braille" size="15.0" />
+               </font></TextArea>
+            <TextArea fx:id="usersListArea" cache="true" layoutX="447.0" layoutY="9.0" pickOnBounds="false" prefHeight="258.0" prefWidth="141.0">
+               <font>
+                  <Font name="Avenir Next Bold" size="15.0" />
+               </font></TextArea>
             </children>
         </AnchorPane>
         <Label layoutX="213.0" prefHeight="89.0" prefWidth="174.0" text="MyFirstChat" textAlignment="CENTER" textFill="WHITE">
@@ -21,6 +30,9 @@
                 <Font name="Zapfino" size="19.0" />
             </font>
         </Label>
-      <Button fx:id="signOutButton" layoutX="481.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="105.0" text="Покинуть чат" />
+      <Button fx:id="signOutButton" layoutX="456.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="130.0" text="Покинуть чат">
+         <font>
+            <Font name="Apple Braille" size="15.0" />
+         </font></Button>
     </children>
 </AnchorPane>

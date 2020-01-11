@@ -1,6 +1,6 @@
 package controllers;
 
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import client.Client;
@@ -16,12 +16,8 @@ import sample.Main;
 
 public class ChatController extends BaseController implements Initializable {
     public static final String URL_FXML = "/gui/view/chatWindow.fxml";
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+    private Client client;
+    private Model model;
 
     @FXML
     private TextField messageTextField;
@@ -38,9 +34,8 @@ public class ChatController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Model model = new Model();
-        Client client = new Client(model);
-        client.setDaemon(true);
+        client = SignInController.getClient();
+        model = client.getModel();
         textChatArea.textProperty().bind(model.newMessageProperty());
         usersListArea.textProperty().bind(model.usersProperty());
         signOutButton.setOnAction(event -> {
@@ -48,12 +43,20 @@ public class ChatController extends BaseController implements Initializable {
             alert.setHeaderText("Вы уверены, что хотите покинуть чат?");
             alert.setTitle("Предупреждение");
             alert.showAndWait();
-            if (alert.getResult().getText().equals("OK")) Main.getNavigation().goBack();
+            if (alert.getResult().getText().equals("OK")) {
+                Main.getNavigation().goBack();
+                try {
+                    client.closeConnection();
+                    client.interrupt();
+                    client = null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
         messageTextField.setOnAction(event -> {
             client.sendTextMessage(messageTextField.getText());
             messageTextField.setText("");
         });
-        client.start();
     }
 }

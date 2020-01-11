@@ -20,8 +20,11 @@ public class Model {
     }
 
     public void setNewMessage(String message) {
-        this.newMessage.set(newMessage.get()+message +"\n");
-        System.out.println(newMessage.toString());
+        String messageResult = message;
+        if(messageResult.length()>55){
+            messageResult = messageTransfer(messageResult);
+        }
+        this.newMessage.set(newMessage.get()+messageResult +"\n");
     }
 
 
@@ -41,4 +44,20 @@ public class Model {
         allUserNames.remove(userName);
     }
 
+
+    private String messageTransfer(String message){
+        int count = message.length()/55;
+        StringBuilder stringBuilder = new StringBuilder(message);
+        int cont2 = 55;
+        while (count>0){
+            if(stringBuilder.charAt(cont2) == ' '){
+                stringBuilder.insert(cont2+1,"\n");
+                cont2 = cont2 + 55;
+                count--;
+            } else {
+                cont2--;
+            }
+        }
+        return stringBuilder.toString();
+    }
 }

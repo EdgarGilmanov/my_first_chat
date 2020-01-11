@@ -8,8 +8,8 @@ public class DataBaseHandler {
     Connection dbConnection;
 
     private Connection getDbConnection() throws ClassNotFoundException, SQLException {
-        String connectionString = "jdbc:mysql://" + Const.DB_HOST + ":" + Const.DB_PORT
-                + "/" + Const.DB_NAME;
+        String connectionString = "jdbc:mysql://" + Const.DB_HOST+ ":" + Const.DB_PORT
+                + "/" + Const.DB_NAME; //jdbc:mysql://localhost/db?useUnicode=true&serverTimezone=UTC&useSSL=true&verifyServerCertificate=false
         Class.forName("com.mysql.cj.jdbc.Driver");
         dbConnection = DriverManager.getConnection(connectionString, Const.DB_USER, Const.DB_PASS);
         return dbConnection;
