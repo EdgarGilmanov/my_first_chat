@@ -2,7 +2,7 @@
   <artifact type="jar" name="TESTTET:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/TESTTET_jar</output-path>
     <root id="archive" name="TESTTET.jar">
-      <element id="module-output" name="TESTTET" />
+      <element id="module-output" name="MyFirstChat" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-11.0.2/lib/src.zip" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-11.0.2/lib/javafx-swt.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-11.0.2/lib/javafx.web.jar" path-in-jar="/" />
