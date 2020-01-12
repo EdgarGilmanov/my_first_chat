@@ -46,17 +46,13 @@ public class Server {
                         connection.send(new Message(MessageType.USER_NOT_ACCEPTED));
                     }
                 }else if(messageClient.getType() == MessageType.USER_REGISTRATION){
-                    System.out.println("Сервер принял запрос на регистрацию");
                     connection.send(new Message(MessageType.REGISTRATION_ALLOWED));
                 } else if(messageClient.getType() == MessageType.REG_USER && messageClient.getUser()!= null){
-                    System.out.println("Сервер принял пользователя на обработку");
                     if(!searchUserInDB(Server.dbHandler,messageClient.getUser())){
                         dbHandler.signUpUser(messageClient.getUser());
                         connection.send(new Message(MessageType.REGISTRATION_ACCEPTED));
-                        System.out.println("Регистрация прошла успешно");
                     }else{
                         connection.send(new Message(MessageType.REGISTRATION_NOT_ACCEPTED));
-                        System.out.println("Регистрация не прошла");
                     }
                 }
             }
@@ -112,9 +108,9 @@ public class Server {
                 connectionMap.remove(user);
                 sendBroadcastMessage(new Message(MessageType.USER_REMOVED, user.getUserName()));
                 socket.close();
-                ConsoleHelper.writeMessage("Соединение с сервером закрыто");
+                ConsoleHelper.writeMessage("Соединение с клиентом закрыто");
             } catch (IOException | ClassNotFoundException e) {
-                ConsoleHelper.writeMessage("Ошибка соединения с сервером");
+                ConsoleHelper.writeMessage("Ошибка соединения с клиентом");
             }
         }
     }
