@@ -1,8 +1,8 @@
 package client.controllers;
 
-import client.Client;
 import client.Launcher;
 import client.Model;
+import client.Client;
 import client.view.animations.ShakeAnim;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,9 +53,8 @@ public class SignInController extends BaseController implements Initializable {
                 errorTextPassword.setOpacity(0);
                 errorTextUserName.setOpacity(0);
                 model = new Model();
-                client = new Client(model);
+                client = new Client(model,user);
                 client.setDaemon(true);
-                client.setUser(user);
                 client.start();
                 try {
                     Thread.sleep(500);
@@ -84,7 +83,6 @@ public class SignInController extends BaseController implements Initializable {
     public static Client getClient() {
         return client;
     }
-
 
     private boolean isCorrectInput(String userName, String password){
         if(userName.isEmpty() && password.isEmpty()){

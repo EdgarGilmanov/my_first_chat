@@ -1,8 +1,8 @@
 package client.controllers;
 
-import client.Client;
 import client.Launcher;
 import client.Model;
+import client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;

@@ -54,6 +54,13 @@ public class Server {
                     }else{
                         connection.send(new Message(MessageType.REGISTRATION_NOT_ACCEPTED));
                     }
+                } else if(messageClient.getType() == MessageType.BOT && messageClient.getUser()!=null){
+                    if(!connectionMap.containsKey(messageClient.getUser())){
+                        user = messageClient.getUser();
+                        connectionMap.put(user,connection);
+                        connection.send(new Message(MessageType.USER_ACCEPTED));
+                        break;
+                    }
                 }
             }
             return user;

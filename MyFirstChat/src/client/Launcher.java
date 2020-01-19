@@ -11,7 +11,7 @@ public class Launcher extends Application {
     public static Navigation getNavigation() {
         return navigation;
     }
-    
+
     @Override
     public void start(Stage primaryStage){
         navigation = new Navigation(primaryStage);
