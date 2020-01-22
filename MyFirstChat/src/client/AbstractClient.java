@@ -89,13 +89,11 @@ public abstract class AbstractClient extends Thread {
         private void informAboutAddingNewUser(String userName) {
             model.setNewMessage(userName + " подлючился(-ась) к чату");
             model.addUser(userName);
-            model.setAllUserNames();
         }
 
         private void informAboutDeletingNewUser(String userName) {
             model.setNewMessage(userName + " покинул(-а) чат");
             model.deleteUser(userName);
-            model.setAllUserNames();
         }
 
         protected void notifyConnectionStatusChanged(boolean clientConnected) {

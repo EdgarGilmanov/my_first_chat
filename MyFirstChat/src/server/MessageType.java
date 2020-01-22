@@ -14,5 +14,6 @@ public enum MessageType {
     REGISTRATION_ACCEPTED,
     REGISTRATION_NOT_ACCEPTED,
     REG_USER,
-    BOT
+    BOT,
+    BOT_MESSAGE
 }

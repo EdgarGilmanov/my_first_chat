@@ -11,7 +11,7 @@ public class Model {
     private SimpleStringProperty newMessage = new SimpleStringProperty("");
     private SimpleStringProperty users = new SimpleStringProperty("");
 
-    public void setAllUserNames() {
+    public void refreshUsersList() {
         StringBuilder sb = new StringBuilder();
         for (String userName : Collections.unmodifiableSet(allUserNames)) {
             sb.append(userName).append("\n");
@@ -39,9 +39,11 @@ public class Model {
 
     public void addUser(String newUserName){
         allUserNames.add(newUserName);
+        refreshUsersList();
     }
     public void deleteUser(String userName){
         allUserNames.remove(userName);
+        refreshUsersList();
     }
 
 

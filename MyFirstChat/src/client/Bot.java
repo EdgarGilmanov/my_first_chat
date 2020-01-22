@@ -9,7 +9,7 @@ import java.net.Socket;
 
 public class Bot extends AbstractClient {
     public Bot(Model model) {
-        super(model, new User("Bot_77","Bot_77","Bot_77","Bot_77","male"));
+        super(model, new User("bot_77","bot_77","bot_77","bot_77","male"));
     }
 
     @Override
@@ -54,6 +54,24 @@ public class Bot extends AbstractClient {
         }
 
         @Override
+        protected void clientMainLoop() throws IOException, ClassNotFoundException {
+            while (true){
+                Message message = getConnection().receive();
+                if(message.getType() == MessageType.BOT_MESSAGE){
+                    String answer = requestHandler(message.getData());
+                    sendTextMessage(answer);
+                }
+            }
+        }
+
+        private String requestHandler(String message){
+            if(message.contains("привет")){
+                return "Здорова!";
+            }
+            return "Не понимаю команду!";
+        }
+
+        @Override
         public void run() {
             try {
                 Socket socket = new Socket("localhost", 8000);
@@ -65,6 +83,8 @@ public class Bot extends AbstractClient {
                 notifyConnectionStatusChanged(false);
             }
         }
+
+
     }
 
     public static void main(String[] args) {

@@ -48,7 +48,6 @@ public class ChatController extends BaseController implements Initializable {
                 Launcher.getNavigation().goBack();
                 try {
                     client.closeConnection();
-                    client.interrupt();
                     client = null;
                 } catch (IOException e) {
                     e.printStackTrace();

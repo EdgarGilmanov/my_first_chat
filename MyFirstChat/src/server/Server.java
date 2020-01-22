@@ -11,7 +11,16 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Server {
-    private static DataBaseHandler dbHandler = new DataBaseHandler();
+    private static DataBaseHandler dbHandler;
+
+    static {
+        try {
+            dbHandler = new DataBaseHandler();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static Map<User, Connection> connectionMap = new ConcurrentHashMap<>();
 
     public static void sendBroadcastMessage(Message message) {
@@ -32,6 +41,7 @@ public class Server {
         }
 
         private User serverHandshake(Connection connection) throws IOException, ClassNotFoundException {
+            //TODO неообходимо оптимизировать код для читабельности
             User user = null;
             while (true){
                 connection.send(new Message(MessageType.USER_REQUEST_DB));
@@ -92,6 +102,7 @@ public class Server {
             while (true) {
                 Message messageClient = connection.receive();
                 if (messageClient.getType() == MessageType.TEXT) {
+                    isItForBots(messageClient.getData());
                     Message messageServer = new Message(MessageType.TEXT, userName + ": " + messageClient.getData());
                     sendBroadcastMessage(messageServer);
                 }else if(messageClient.getType() == MessageType.CLOSE_CONNECTION){
@@ -99,6 +110,15 @@ public class Server {
                 } else {
                     ConsoleHelper.writeMessage("Ошибка получения сообщения от пользователя");
                     break;
+                }
+            }
+        }
+        private void isItForBots(String message) throws IOException {
+            if(message.startsWith("//bot")){
+                for(User key : connectionMap.keySet()){
+                    if(message.contains(key.getUserName())){
+                        connectionMap.get(key).send(new Message(MessageType.BOT_MESSAGE,message));
+                    }
                 }
             }
         }
