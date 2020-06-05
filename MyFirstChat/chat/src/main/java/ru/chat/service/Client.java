@@ -1,5 +1,6 @@
 package ru.chat.service;
 
+import com.sun.tools.internal.ws.processor.model.Model;
 import server.Connection;
 import server.User;
 

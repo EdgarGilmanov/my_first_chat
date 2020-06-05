@@ -11,14 +11,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import ru.chat.Launcher;
+import ru.chat.model.Chat;
 import ru.chat.model.User;
+import ru.chat.service.Client;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SignInController extends BaseController implements Initializable {
     private static Client client;
-    private Model model;
+    private Chat model;
     public static final String URL_FXML = "/client/view/signIn.fxml";
 
     @FXML

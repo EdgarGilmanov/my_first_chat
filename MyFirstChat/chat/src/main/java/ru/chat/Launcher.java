@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import org.apache.commons.dbcp2.BasicDataSource;
 import ru.chat.controller.Navigation;
 import ru.chat.controller.SignInController;
+import ru.chat.server.Server;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,7 +13,7 @@ import java.io.FileReader;
 import java.util.Properties;
 
 public class Launcher extends Application {
-    private Navigation navigation;
+    private static Navigation navigation;
     private final String path;
     private final Properties cfg = new Properties();
     private final BasicDataSource pool = new BasicDataSource();
@@ -38,11 +39,18 @@ public class Launcher extends Application {
 
     private void server() {
         if (cfg.getProperty("server").equals("true")) {
-            //server.start();
+            Thread server = new Thread(new Server(
+                    pool,
+                    Integer.parseInt(cfg.getProperty("fork.pool.size")),
+                    Integer.parseInt(cfg.getProperty("server.port"))));
+            server.start();
         }
     }
 
 
+    public static Navigation getNavigation() {
+        return navigation;
+    }
 
     @Override
     public void start(Stage primaryStage) {

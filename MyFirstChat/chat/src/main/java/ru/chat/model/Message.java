@@ -3,23 +3,23 @@ package ru.chat.model;
 import java.io.Serializable;
 
 public class Message implements Serializable {
-    private final MessageType type;
+    private final Type type;
     private final String data;
     private final User user;
 
-    public Message(MessageType type, String data){
+    public Message(Type type, String data){
         this.type = type;
         this.data = data;
         this.user = null;
     }
 
-    public Message(MessageType type, User user) {
+    public Message(Type type, User user) {
         this.type = type;
         this.user = user;
         this.data = null;
     }
 
-    public Message(MessageType type){
+    public Message(Type type){
         this.type = type;
         this.data = null;
         this.user = null;
@@ -29,7 +29,7 @@ public class Message implements Serializable {
         return user;
     }
 
-    public MessageType getType() {
+    public Type getType() {
         return type;
     }
 
@@ -37,20 +37,18 @@ public class Message implements Serializable {
         return data;
     }
 
-    public enum MessageType {
-        USER_REQUEST_DB,
-        USER,
+    public enum Type {
+        USER_REQUEST,
+        USER_LOGIN,
+        USER_REGISTRATION,
+        REGISTRATION_ACCEPTED,
+        REGISTRATION_NOT_ACCEPTED,
+        USER_ADDED,
+        USER_REMOVED,
         USER_ACCEPTED,
         USER_NOT_ACCEPTED,
         TEXT,
-        USER_ADDED,
-        USER_REMOVED,
         CLOSE_CONNECTION,
-        USER_REGISTRATION,
-        REGISTRATION_ALLOWED,
-        REGISTRATION_ACCEPTED,
-        REGISTRATION_NOT_ACCEPTED,
-        REG_USER,
         BOT,
         BOT_MESSAGE
     }

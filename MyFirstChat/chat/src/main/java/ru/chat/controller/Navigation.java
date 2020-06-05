@@ -41,7 +41,7 @@ public class Navigation {
         return null;
     }
 
-    public void show(client.controllers.BaseController controller) {
+    public void show(BaseController controller) {
         scene.setRoot((Parent) controller.getView());
         controllers.add(controller);
     }

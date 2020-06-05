@@ -1,6 +1,7 @@
 package ru.chat.controller;
 
 import javafx.scene.Node;
+import ru.chat.Launcher;
 
 
 public class BaseController implements Controller {

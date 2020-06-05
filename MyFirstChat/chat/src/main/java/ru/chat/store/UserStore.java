@@ -15,15 +15,15 @@ import java.util.Optional;
 
 public class UserStore implements Store<User> {
     private final Logger log = LoggerFactory.getLogger(UserStore.class);
-    private final BasicDataSource ds;
+    private final BasicDataSource pool;
 
-    public UserStore(BasicDataSource ds) {
-        this.ds= ds;
+    public UserStore(BasicDataSource pool) {
+        this.pool = pool;
     }
 
     @Override
     public User save(User user) {
-        try (Connection cnn = ds.getConnection();
+        try (Connection cnn = pool.getConnection();
              PreparedStatement st = cnn.prepareStatement(
                      "INSERT INTO users (first_name, last_name, user_name, password, gender) " +
                              "VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
@@ -46,8 +46,8 @@ public class UserStore implements Store<User> {
 
     @Override
     public boolean delete(User user) {
-        try (Connection cnn = ds.getConnection();
-            PreparedStatement st = cnn.prepareStatement(
+        try (Connection cnn = pool.getConnection();
+             PreparedStatement st = cnn.prepareStatement(
                     "DELETE FROM users WHERE id = ?")) {
             st.setInt(1, user.getId());
             st.execute();
@@ -61,8 +61,8 @@ public class UserStore implements Store<User> {
     @Override
     public Collection<User> getAll() {
         Collection<User> rsl = new ArrayList<>();
-        try (Connection cnn = ds.getConnection();
-            PreparedStatement st = cnn.prepareStatement(
+        try (Connection cnn = pool.getConnection();
+             PreparedStatement st = cnn.prepareStatement(
                     "SELECT * FROM users")) {
             try (ResultSet rs = st.executeQuery()){
                 while (rs.next()) {
@@ -83,8 +83,8 @@ public class UserStore implements Store<User> {
 
     @Override
     public User update(User user) {
-        try (Connection cnn = ds.getConnection();
-            PreparedStatement st = cnn.prepareStatement(
+        try (Connection cnn = pool.getConnection();
+             PreparedStatement st = cnn.prepareStatement(
                     "UPDATE users SET first_name = ?, last_name = ?, user_name = ?, password = ?, gender = ?")) {
             st.setString(1, user.getFirstName());
             st.setString(2, user.getLastName());
@@ -101,7 +101,7 @@ public class UserStore implements Store<User> {
     @Override
     public Optional<User> findBy(String userName) {
         Optional<User> rsl = Optional.empty();
-        try (Connection cnn = ds.getConnection();
+        try (Connection cnn = pool.getConnection();
              PreparedStatement st = cnn.prepareStatement(
                      "SELECT * FROM users WHERE user_name = ?")) {
             st.setString(1, userName);
@@ -125,7 +125,7 @@ public class UserStore implements Store<User> {
     @Override
     public Optional<User> findById(String id) {
         Optional<User> rsl = Optional.empty();
-        try (Connection cnn = ds.getConnection();
+        try (Connection cnn = pool.getConnection();
              PreparedStatement st = cnn.prepareStatement(
                      "SELECT * FROM users WHERE id = ?")) {
             st.setInt(1, Integer.parseInt(id));
