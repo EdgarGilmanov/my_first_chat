@@ -91,14 +91,6 @@ public class Server implements Runnable {
         return us;
     }
 
-    private void registration(Connection cnn, User user) throws IOException {
-        Optional<User> us = Optional.of((User)store.save(user));
-        if (!us.isPresent() || us.get().getId() < 1) {
-            cnn.send(new Message(Message.Type.REGISTRATION_NOT_ACCEPTED));
-        }
-        cnn.send(new Message(Message.Type.REGISTRATION_ACCEPTED));
-    }
-
     private void notifyUsers(Connection connection, String userName) {
         connectionMap.forEach((k, v) -> {
             if (!k.getUserName().equals(userName)) {
@@ -108,6 +100,14 @@ public class Server implements Runnable {
                 }
             }
         });
+    }
+
+    private void registration(Connection cnn, User user) throws IOException {
+        Optional<User> us = Optional.of((User)store.save(user));
+        if (!us.isPresent() || us.get().getId() < 1) {
+            cnn.send(new Message(Message.Type.REGISTRATION_NOT_ACCEPTED));
+        }
+        cnn.send(new Message(Message.Type.REGISTRATION_ACCEPTED));
     }
 
     private void mainLoop(Connection connection, User user) throws IOException, ClassNotFoundException {
