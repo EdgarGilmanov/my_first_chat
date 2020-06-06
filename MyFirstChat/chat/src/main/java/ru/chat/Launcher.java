@@ -6,6 +6,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import ru.chat.controller.Navigation;
 import ru.chat.controller.SignInController;
 import ru.chat.server.Server;
+import ru.chat.service.Client;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +18,7 @@ public class Launcher extends Application {
     private final String path;
     private final Properties cfg = new Properties();
     private final BasicDataSource pool = new BasicDataSource();
+    private static Client client;
 
     public Launcher(String path) {
         this.path = path;
@@ -47,9 +49,11 @@ public class Launcher extends Application {
         }
     }
 
-
-    public static Navigation getNavigation() {
-        return navigation;
+    private void client() {
+        client = new Client(cfg.getProperty("host"),
+                Integer.parseInt(cfg.getProperty("port")));
+        Thread t = new Thread(client);
+        t.start();
     }
 
     @Override
@@ -61,11 +65,20 @@ public class Launcher extends Application {
         navigation.load(SignInController.URL_FXML).show();
     }
 
+    public static Navigation getNavigation() {
+        return navigation;
+    }
+
+    public static Client getClient() {
+        return client;
+    }
+
     public static void main(String[] args) {
         Launcher l = new Launcher("app.properties");
         l.cfg();
         l.pool();
         l.server();
+        l.client();
         launch(args);
     }
 }

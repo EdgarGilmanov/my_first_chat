@@ -1,9 +1,5 @@
 package ru.chat.controller;
 
-import client.Client;
-import client.Launcher;
-import client.Model;
-import client.view.animations.ShakeAnim;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -12,7 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import ru.chat.Launcher;
-import ru.chat.model.Chat;
+import ru.chat.controller.animations.ShakeAnim;
 import ru.chat.model.User;
 import ru.chat.service.Client;
 
@@ -20,9 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SignInController extends BaseController implements Initializable {
-    private static Client client;
-    private Chat model;
-    public static final String URL_FXML = "/client/view/signIn.fxml";
+    public static final String URL_FXML = "ru/chat/JFX-INF/views/signIn.fxml";
 
     @FXML
     private TextField userNameField;
@@ -52,39 +46,30 @@ public class SignInController extends BaseController implements Initializable {
             String password = passwordField.getText().trim();
 
             if (isCorrectInput(userName, password)) {
-                User user = new User(userName, password);
-                errorTextPassword.setOpacity(0);
-                errorTextUserName.setOpacity(0);
-                model = new Model();
-                client = new Client(model,user);
-                client.setDaemon(true);
-                client.start();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (client.isClientConnected()) {
+                skipErrorText();
+                User user = new User();
+                user.setUserName(userName);
+                user.setPassword(password);
+                Client client = Launcher.getClient();
+                client.setUser(user);
+                client.notifyAll();
+                if (checkClient(client)) {
                     Launcher.getNavigation().load(ChatController.URL_FXML).show();
-                } else if(!client.isServerConnect()){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Ошибка соединения с сервером");
-                    alert.setHeaderText("Нет подлкючения к серверу. Повторите попытку позже");
-                    alert.showAndWait();
-                    client = null;
-                    model = null;
-                } else if(client.isUserNotFound()){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Ошибка авторизации");
-                    alert.setHeaderText("Пользователь с таким логином или паролем не найден");
-                    alert.showAndWait();
                 }
             }
         });
     }
 
-    public static Client getClient() {
-        return client;
+    private boolean checkClient(Client client) {
+        boolean sr = client.isServerConnect();
+        boolean us = client.isUserExist();
+        if (sr) {
+            alertErrorWithServerConnect();
+        }
+        if (us) {
+            alertUserNotFount();
+        }
+        return sr && us;
     }
 
     private boolean isCorrectInput(String userName, String password){
@@ -104,7 +89,25 @@ public class SignInController extends BaseController implements Initializable {
             errorTextPassword.setOpacity(100);
             new ShakeAnim(passwordField).play();
         } else return true;
-
         return false;
+    }
+
+    private void alertUserNotFount() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка авторизации");
+        alert.setHeaderText("Пользователь с таким логином или паролем не найден");
+        alert.showAndWait();
+    }
+
+    private void alertErrorWithServerConnect() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка соединения с сервером");
+        alert.setHeaderText("Нет подлкючения к серверу. Повторите попытку позже");
+        alert.showAndWait();
+    }
+
+    private void skipErrorText() {
+        errorTextPassword.setOpacity(0);
+        errorTextUserName.setOpacity(0);
     }
 }

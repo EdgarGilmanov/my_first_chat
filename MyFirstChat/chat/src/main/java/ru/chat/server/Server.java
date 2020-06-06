@@ -83,6 +83,7 @@ public class Server implements Runnable {
         cnn.send(new Message(Message.Type.USER_ACCEPTED));
         sendBroadcastMessage(new Message(Message.Type.USER_ADDED, user.getUserName()));
         notifyUsers(cnn, us.get().getUserName());
+        log.info("user logged in {}", us.get().getUserName());
         return us;
     }
 

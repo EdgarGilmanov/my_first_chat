@@ -18,7 +18,7 @@ import java.util.concurrent.Future;
 
 public class SignUpController extends BaseController implements Initializable {
 
-    public static final String URL_FXML = "/client/view/signUp.fxml";
+    public static final String URL_FXML = "ru/chat/JFX-INF/views/signUp.fxml";
 
     @FXML
     private TextField userNameField;
