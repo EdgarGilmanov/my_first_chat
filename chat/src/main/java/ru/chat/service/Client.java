@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import ru.chat.model.Chat;
 import ru.chat.model.Message;
 import ru.chat.model.User;
-import ru.chat.server.Connection;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

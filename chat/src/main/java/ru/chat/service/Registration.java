@@ -1,7 +1,6 @@
 package ru.chat.service;
 
 import ru.chat.model.Message;
-import ru.chat.server.Connection;
 
 import java.util.concurrent.Callable;
 

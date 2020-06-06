@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.chat.model.Message;
 import ru.chat.model.User;
+import ru.chat.service.Connection;
 import ru.chat.store.Store;
 import ru.chat.store.UserStore;
 

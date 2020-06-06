@@ -1,4 +1,4 @@
-package ru.chat.server;
+package ru.chat.service;
 
 import ru.chat.model.Message;
 
