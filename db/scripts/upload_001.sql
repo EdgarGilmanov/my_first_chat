@@ -7,4 +7,5 @@ CREATE TABLE IF NOT EXISTS users
     password VARCHAR(255) NOT NULL,
     gender BOOLEAN NOT NULL,
     UNIQUE (user_name)
+
 );
