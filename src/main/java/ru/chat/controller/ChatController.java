@@ -29,7 +29,6 @@ public class ChatController extends BaseController implements Initializable {
     @FXML
     private Button signOutButton;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Client client = Launcher.getClient();

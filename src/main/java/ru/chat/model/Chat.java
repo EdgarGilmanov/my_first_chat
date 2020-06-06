@@ -46,7 +46,6 @@ public class Chat {
         refreshUsersList();
     }
 
-
     //здесь пытаемся разделить длинное сообщение
     private String messageTransfer(String message){
         int count = message.length()/50;

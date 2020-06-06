@@ -5,6 +5,7 @@ import ru.chat.model.Message;
 import java.util.concurrent.Callable;
 
 public class Registration implements Callable<Registration.Status> {
+
     private final Client client;
 
     public Registration(Client client) {

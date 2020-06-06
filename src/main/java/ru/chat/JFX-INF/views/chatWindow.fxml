@@ -10,6 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #58527D#58527D;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.chat.controller.ChatController">
     <children>
         <AnchorPane layoutY="89.0" prefHeight="313.0" prefWidth="600.0" style="-fx-background-color: fafafa;">
+
             <children>
             <TextField fx:id="messageTextField" layoutX="10.0" layoutY="272.0" prefHeight="27.0" prefWidth="578.0" promptText="Введите свое сообщение...">
                <font>

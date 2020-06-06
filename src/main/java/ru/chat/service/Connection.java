@@ -5,6 +5,7 @@ import ru.chat.model.Message;
 import java.io.*;
 
 public class Connection {
+
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
 

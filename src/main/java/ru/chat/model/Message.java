@@ -49,8 +49,5 @@ public class Message implements Serializable {
         USER_NOT_ACCEPTED,
         TEXT,
         CLOSE_CONNECTION,
-        BOT,
-        BOT_MESSAGE
     }
-
 }

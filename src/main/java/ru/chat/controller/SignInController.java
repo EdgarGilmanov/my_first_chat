@@ -92,17 +92,17 @@ public class SignInController extends BaseController implements Initializable {
         return false;
     }
 
-    private void alertUserNotFount() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка авторизации");
-        alert.setHeaderText("Пользователь с таким логином или паролем не найден");
-        alert.showAndWait();
-    }
-
     private void alertErrorWithServerConnect() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Ошибка соединения с сервером");
         alert.setHeaderText("Нет подлкючения к серверу. Повторите попытку позже");
+        alert.showAndWait();
+    }
+
+    private void alertUserNotFount() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка авторизации");
+        alert.setHeaderText("Пользователь с таким логином или паролем не найден");
         alert.showAndWait();
     }
 

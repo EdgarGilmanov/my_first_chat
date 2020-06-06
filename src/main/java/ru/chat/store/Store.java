@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface Store<T> {
-
     T save(T t);
 
     boolean delete(T t);
@@ -16,5 +15,4 @@ public interface Store<T> {
     Optional<T> findBy(String param);
 
     Optional<T> findById(String id);
-
 }

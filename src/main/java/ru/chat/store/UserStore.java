@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class UserStore implements Store<User> {
+
     private final Logger log = LoggerFactory.getLogger(UserStore.class);
     private final BasicDataSource pool;
 

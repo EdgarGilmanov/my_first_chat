@@ -141,17 +141,17 @@ public class SignUpController extends BaseController implements Initializable {
         return (fn && ln && un && pw);
     }
 
-    private void alertErrorReg() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Ошибка регистрации");
-        alert.setHeaderText("Пользователь с таким логином уже найден");
-        alert.showAndWait();
-    }
-
     private void alertOkReg() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Завершение регистрации");
         alert.setHeaderText("Регистрация заверешена. В окне авторизации войдите в свою учетную запись");
+        alert.showAndWait();
+    }
+
+    private void alertErrorReg() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Ошибка регистрации");
+        alert.setHeaderText("Пользователь с таким логином уже найден");
         alert.showAndWait();
     }
 }

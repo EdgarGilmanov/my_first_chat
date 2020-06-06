@@ -19,7 +19,6 @@ public class Launcher extends Application {
     private final Properties cfg = new Properties();
     private final BasicDataSource pool = new BasicDataSource();
     private static Client client;
-
     public Launcher() { }
 
     public Launcher(String path) {

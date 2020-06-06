@@ -53,7 +53,6 @@ public class Navigation {
         }
     }
 
-
     public void clearHistory() {
         while (controllers.size() > 1)
             controllers.remove(0);

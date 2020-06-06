@@ -106,12 +106,12 @@ public class Client implements Runnable {
         return connection;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public Chat getModel() {
         return model;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void setUser(User user) {

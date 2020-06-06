@@ -14,6 +14,7 @@ public class ShakeAnim {
         tt.setCycleCount(3);
         tt.setAutoReverse(true);
     }
+
     public void play(){
         tt.playFromStart();
     }

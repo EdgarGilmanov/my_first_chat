@@ -5,7 +5,6 @@ import ru.chat.Launcher;
 
 
 public class BaseController implements Controller {
-
     private Node view;
 
     @Override
